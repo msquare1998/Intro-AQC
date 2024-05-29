@@ -6,7 +6,7 @@
 
 ## 1) Introduction
 
-Though the relation between BQP and NP has not been understood clearly, it is expected that quantum computation can solve problems that are intractable for classical computation. Adiabatic quantum computation (AQC) serves as one of the paradigms (computational model) for quantum computation, which utilizes the well-known quantum adiabatic theorem, and has achieved fast development in decades [1, 2].
+Though the relation between BQP and NP has not been understood clearly, it is expected that quantum computation can solve problems that are intractable for classical computation. Adiabatic quantum computation (AQC) serves as one of the paradigms (computational model) for quantum computation, which utilizes the well-known quantum adiabatic theorem, and has achieved fast development in decades [1].
 
 In this page, I will take a simple satisfiability (SAT) problem as an example, to show how AQC can be implemented to mathematical problems. It is assumed that you have had some basic knowledge of quantum mechanics and quantum computing especially the unitary gates and quantum measurement. Classical simulation of quantum circuits with programming will also be introduced for validating the efficacy of our algorithm, therefore you should better have some programming experience as well. 
 
@@ -35,9 +35,11 @@ One can easily determine the solution for this demo problem via enumerating and 
 ## 3) Quantum adiabatic theorem
 
  The archetypal Hamiltonian of AQC is 
+ 
 $$
 H(s)=sH_0+(1-s)H_1
 $$
+
 where $H_0$ relates to the problem we care and $H_1$ is some auxillary Hamiltonian which uncommutes with $H_0$. 
 
 Initially, we set $s=0$, i.e. $H(s)=H_1$, and prepare the ground state of $H_1$. Then we slowly increase $s$ to $1$ monotonically. The quantum adiabatic theorem states that as long as this process is sufficiently slow, we can obtain the ground state of $H_0$ finally. For more details of this procedure, one can refer to [1].
@@ -47,21 +49,26 @@ Initially, we set $s=0$, i.e. $H(s)=H_1$, and prepare the ground state of $H_1$.
 The key idea here is to encode the solution as the ground state of $H_0$, then we can start from some easy-to-prepare $H_1$ and finally obtain the solution.
 
 Consider the mapping
+
 $$
 \begin{split}
 	x_j  &\to \frac{Z_j + 1}{2} \\
 	\{0, 1\} &\mapsto \{-1,1\}
 \end{split}
 $$
+
 where $Z_j$ is the Pauli operator on the $z$-axis.
 
 Notice that for $f_1=(\lnot x_1\lor x_2)$, iff $x_1=1$ and $x_2=0$ can $f_1$ be false. Therefore we punish this possibility by constructing a punishment
+
 $$
 H_{f_1}=(1+Z_1)(1-Z_2)
 $$
+
 for which the case that $x_1=1,x_2=0$, or $Z_1=1,Z_2=-1$, is an excited state. 
 
 Simiarly, we can construct
+
 $$
 \begin{equation}
 \begin{split}
@@ -70,28 +77,37 @@ $$
 \end{split}
 \end{equation}
 $$
+
 Then our goal becomes finding the ground state of 
+
 $$
 H_0=H_{f_1}+H_{f_2}+H_{f_3} =-Z_1Z_2+Z_2Z_3+Z_1Z_3 + 3
 $$
+
 Take
+
 $$
 H_1=X_1+X_2+X_3
 $$
+
 where $X_j$ is the Pauli operator along $x$-axis.
 
 Therefore, under Trotter-Suzuki expansion, the evolution operator becomes
+
 $$
 \begin{split}
 	e^{-iHt}\approx e^{-i(1-s)X_1t}e^{-i(1-s)X_2t}e^{-i(1-s)X_3t}e^{isZ_1Z_2t}e^{-isZ_2Z_3t} e^{-isZ_1Z_3t}
 \end{split}
 $$
+
 which can be rewritten by a series of rotation gates and CNOT gates.
 
 The ground state of $H_1$ is $|---\rangle$, where 
+
 $$
 |-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}
 $$
+
 which can be prepared with NOT gates and Hadamard gates.
 
 ## 5) Coding
@@ -206,8 +222,6 @@ Solutions:
 ## References
 
 [1] E. Farhi et al. Quantum Computation by Adiabatic Evolution. [arXiv:quant-ph/0001106.](https://arxiv.org/abs/quant-ph/0001106)
-
-[2] Kostas et al. A Review on Quantum Approximate Optimization Algorithm and its Variants. [arXiv:2306.09198 [quant-ph].](https://arxiv.org/abs/2306.09198)
 
 
 
