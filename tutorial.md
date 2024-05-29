@@ -13,9 +13,11 @@ In this page, I will take a simple satisfiability (SAT) problem as an example, t
 ## 2) SAT problem
 
 A logical form is called a conjunctive norm form (CNF) if it takes the form like
+
 $$
 (A\lor B)\land (C\lor D \lor E ) \land \cdots 
 $$
+
 where $A,B,C,\dots$ are all boolean variables. 
 
 When all brackets have and only have $k$ terms inside, we call this kind of  CNF a $k$-CNF. 
@@ -23,9 +25,11 @@ When all brackets have and only have $k$ terms inside, we call this kind of  CNF
 A $k$-SAT problem is thus to find the solution to a $k$-CNF. For better illustration, we consider a 2-SAT problem in this tutorial, but one should keep in mind that when $k\ge 3$, the problem is NP-complete.
 
 As a specific example, we consider three boolean variables $\{x_1,x_2,x_3\}$ and for convenience, we use 0 to denote false and 1 to denote true. The CNF is taken to be
+
 $$
 (\lnot x_1\lor x_2)\land (\lnot x_2\lor \lnot x_3)\land (x_1\lor x_3)
 $$
+
 One can easily determine the solution for this demo problem via enumerating and obtain the two sets of solutions $\{0,0,1\}$ and $\{1,1,0\}$. Next, we will see how to solve this problem via AQC.
 
 ## 3) Quantum adiabatic theorem
