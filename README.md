@@ -1,6 +1,6 @@
 # README.md
 See the tutorial in ```tutorial.md```
 
-The code demonstration uses the ```QuEST``` library, whose latest version can be found via https://quest.qtechtheory.org/
+The code for demonstration includes ```<QuEST.h>```, a C library, whose latest version can be found here: https://quest.qtechtheory.org/
 
 Contact me: dingyiming@westlake.edu.cn
